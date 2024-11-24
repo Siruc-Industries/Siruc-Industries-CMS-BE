@@ -18,5 +18,6 @@ model Article {
   title     String
   text      String
   author    String
+  image     String?
   createdAt DateTime @default(now())
 }
