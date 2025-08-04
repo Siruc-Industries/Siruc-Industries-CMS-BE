@@ -17,6 +17,7 @@ model Article {
   id        Int      @id @default(autoincrement())
   title     String
   text      String
+  tabs      Json?
   author    String
   image     String?
   createdAt DateTime @default(now())

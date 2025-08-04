@@ -26,12 +26,13 @@ exports.getArticleById = async (req, res) => {
 };
 
 exports.createArticle = async (req, res) => {
-  const { title, text, author } = req.body;
+  let { title, text, author, tabs } = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-
+  tabs = JSON.parse(tabs);
+  
   try {
     const newArticle = await prisma.article.create({
-      data: { title, text, author, image: imagePath },
+      data: { title, text, author, image: imagePath, tabs },
     });
     res.status(201).json(newArticle);
   } catch (error) {
