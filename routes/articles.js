@@ -6,16 +6,10 @@ const {
   updateArticle,
   deleteArticle,
 } = require('../controllers/articlesController');
-const multer = require('multer');
+// shared upload middleware Multer for image upload
+const upload = require('../middlewares/upload');
 
 const router = express.Router();
-
-// Configure Multer for file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
-});
-const upload = multer({ storage });
 
 router.get('/', getAllArticles);
 router.get('/:id', getArticleById);

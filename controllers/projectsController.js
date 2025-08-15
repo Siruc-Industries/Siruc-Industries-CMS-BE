@@ -1,31 +1,31 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-exports.getAllArticles = async (req, res) => {
+exports.getAllProjects = async (req, res) => {
   try {
-    const articles = await prisma.article.findMany();
-    res.json(articles);
+    const projects = await prisma.project.findMany();
+    res.json(projects);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error fetching articles');
+    res.status(500).send('Error fetching projects');
   }
 };
 
-exports.getArticleById = async (req, res) => {
+exports.getProjectById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const article = await prisma.article.findUnique({ where: { id: parseInt(id, 10) } });
-    if (!article) return res.status(404).json({ message: 'Article not found' });
+    const project = await prisma.project.findUnique({ where: { id: parseInt(id, 10) } });
+    if (!project) return res.status(404).json({ message: 'Project not found' });
 
-    res.json(article);
+    res.json(project);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error fetching article');
+    res.status(500).send('Error fetching project');
   }
 };
 
-exports.createArticle = async (req, res) => {
+exports.createProject = async (req, res) => {
   let { title, text, author, tabs, imageDescription } = req.body;
   const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
   // Safely parse tabs if it exists, otherwise set to null
@@ -38,19 +38,19 @@ exports.createArticle = async (req, res) => {
       parsedTabs = null;
     }
   }
-  
+
   try {
-    const newArticle = await prisma.article.create({
+    const newProject = await prisma.project.create({
       data: { title, text, author, image: imagePath, tabs: parsedTabs, imageDescription },
     });
-    res.status(201).json(newArticle);
+    res.status(201).json(newProject);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error creating article');
+    res.status(500).send('Error creating project');
   }
 };
 
-exports.updateArticle = async (req, res) => {
+exports.updateProject = async (req, res) => {
   const { id } = req.params;
   const { title, text, author, tabs } = req.body;
   
@@ -79,26 +79,26 @@ exports.updateArticle = async (req, res) => {
       }
     }
 
-    const updatedArticle = await prisma.article.update({
+    const updatedProject = await prisma.project.update({
       where: { id: parseInt(id, 10) },
       data: updateData,
     });
     
-    res.status(200).json(updatedArticle);
+    res.status(200).json(updatedProject);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error updating article');
+    res.status(500).send('Error updating project');
   }
 };
 
-exports.deleteArticle = async (req, res) => {
+exports.deleteProject = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await prisma.article.delete({ where: { id: parseInt(id, 10) } });
+    await prisma.project.delete({ where: { id: parseInt(id, 10) } });
     res.status(204).send();
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error deleting article');
+    res.status(500).send('Error deleting project');
   }
 };

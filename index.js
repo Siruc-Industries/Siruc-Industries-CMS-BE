@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const rateLimit = require('./middlewares/rateLimiter');
 const articlesRouter = require('./routes/articles');
+const projectsRouter = require('./routes/projects');
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(bodyParser.json());
 
 // Mount the articles routes
 app.use('/api/articles', articlesRouter);
+
+// Mount the projects routes
+app.use('/api/projects', projectsRouter);
 
 const PORT = 5000;
 app.listen(PORT, () => {
