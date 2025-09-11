@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // pooled for serverless
 }
 
 model Article {
@@ -20,6 +20,7 @@ model Article {
   tabs      Json?
   author    String
   image     String?
+  imageDescription String?
   createdAt DateTime @default(now())
 }
 
@@ -30,5 +31,6 @@ model Project {
   tabs      Json?
   author    String
   image     String?
+  imageDescription String?
   createdAt DateTime @default(now())
 }
