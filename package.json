@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && tsc -p .",
+    "vercel-build": "prisma generate && prisma migrate deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
