@@ -27,7 +27,7 @@ exports.getArticleById = async (req, res) => {
 
 exports.createArticle = async (req, res) => {
   let { title, text, author, tabs, imageDescription } = req.body;
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+  const imageUrl = req.file ? req.file.path : null;
   // Safely parse tabs if it exists, otherwise set to null
   let parsedTabs = null;
   if (tabs && tabs !== 'undefined') {
@@ -41,7 +41,7 @@ exports.createArticle = async (req, res) => {
   
   try {
     const newArticle = await prisma.article.create({
-      data: { title, text, author, image: imagePath, tabs: parsedTabs, imageDescription },
+      data: { title, text, author, image: imageUrl, tabs: parsedTabs, imageDescription },
     });
     res.status(201).json(newArticle);
   } catch (error) {
